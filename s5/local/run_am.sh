@@ -14,12 +14,12 @@
 # limitations under the License.
 
 if [ -f cmd.sh ]; then
-      . cmd.sh; else
+      . ./cmd.sh; else
          echo "missing cmd.sh"; exit 1;
 fi
 
 if [ -f path.sh ]; then
-      . path.sh; else
+      . ./path.sh; else
          echo "missing path.sh"; exit 1;
 fi
 

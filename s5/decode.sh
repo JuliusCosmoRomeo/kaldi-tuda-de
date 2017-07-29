@@ -39,7 +39,7 @@
 # able to decode anything!
 # 
 
-decodedir=frei_test
+decodedir=tibAvTestSet
 mfccdir=mfcc
 
 # Check that steps and utils are probably linked:
@@ -49,19 +49,19 @@ mfccdir=mfcc
 # Now start preprocessing with KALDI scripts
 
 if [ -f cmd.sh ]; then
-      . cmd.sh; else
+      . ./cmd.sh; else
          echo "missing cmd.sh"; exit 1;
 fi
 
 # Path also sets LC_ALL=C for Kaldi, otherwise you will experience strange (and hard to debug!) bugs.
 if [ -f path.sh ]; then
-      . path.sh; else
+      . ./path.sh; else
          echo "missing path.sh"; exit 1;
 
 fi
 
 # This has to be set to a number equal or smaller than the total number of wav files in $decodedir ! 
-mfccJobs=6
+mfccJobs=4
 nDecodeJobs=2
 
 echo "Runtime configuration is: nJobs $nJobs, nDecodeJobs $nDecodeJobs, mfccJobs $mfccJobs. If this is not what you want, edit decode.sh!"

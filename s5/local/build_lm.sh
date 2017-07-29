@@ -17,7 +17,7 @@ srcdir=data/local/lang
 dir=data/local/lm
 
 if [ -f path.sh ]; then
-      . path.sh; else
+      . ./path.sh; else
          echo "missing path.sh"; exit 1;
 fi
 

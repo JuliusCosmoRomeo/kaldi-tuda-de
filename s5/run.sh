@@ -17,7 +17,8 @@ utf8()
 }
 
 # Prepares KALDI dir structure and asks you where to store mfcc vectors and the final models (both can take up significant space)
-python local/prepare_dir_structure.py
+echo $1
+python local/prepare_dir_structure.py $1
 
 if [ ! -d data/wav/german-speechdata-package-v2 ]
 then
@@ -33,13 +34,15 @@ RAWDATA=data/wav/german-speechdata-package-v2
 # Filter by name
 FILTERBYNAME="*.xml"
 
-find $RAWDATA/*/$FILTERBYNAME -type f > data/waveIDs.txt
+find $RAWDATA/dev/$FILTERBYNAME -type f > data/waveIDs.txt
+find $RAWDATA/test/$FILTERBYNAME -type f >> data/waveIDs.txt
+find $RAWDATA/train/$FILTERBYNAME -type f >> data/waveIDs.txt
 python local/data_prepare.py -f data/waveIDs.txt
 
 # Get freely available phoneme dictionaries, if they are not already downloaded
 if [ ! -f data/lexicon/de.txt ]
 then
-    wget --directory-prefix=data/lexicon/ https://raw.githubusercontent.com/marytts/marytts/master/marytts-languages/marytts-lang-de/lib/modules/de/lexicon/de.txt 
+    wget --directory-prefix=data/lexicon/ https://raw.githubusercontent.com/marytts/marytts-lexicon-de/master/modules/de/lexicon/de.txt
     echo "data/lexicon/train.txt">> data/lexicon_ids.txt
     echo "data/lexicon/de.txt">> data/lexicon_ids.txt
 fi
