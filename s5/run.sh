@@ -25,7 +25,7 @@ echo $dirname
 python local/prepare_dir_structure.py $dirname
 
 #adapt this to the Sprachdatenaufnahmen2014 folder on your disk
-RAWDATA=data/wav/
+RAWDATA=data/wav
 
 # Filter by name
 FILTERBYNAME="*.xml"
