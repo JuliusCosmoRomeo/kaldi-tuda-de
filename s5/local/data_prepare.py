@@ -257,7 +257,7 @@ if __name__ == '__main__':
     parser.add_argument('-f', '--filelist', dest='filelist', help='process this file list', type=str, default = '')
     parser.add_argument('-r', '--remove_extension', dest='remove_extension', help='remove this extension, to get plain file id', type=str, default='.xml')
     parser.add_argument('-w', '--audio-file-extension', dest='wav_extension', help='extension for audio files', type=str, default='.wav')
-    parser.add_argument('-p', '--utterance-postfix-name', dest='postfix', help='--utterance-postfix-name', type=str, default='_Kinect-Beam')
+    parser.add_argument('-p', '--utterance-postfix-name', dest='postfix', help='--utterance-postfix-name', type=str, default='')
 
     args = parser.parse_args()
 
