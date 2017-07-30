@@ -24,16 +24,8 @@ echo $dirname
 
 python local/prepare_dir_structure.py $dirname
 
-if [ ! -d data/wav/german-speechdata-package-v2 ]
-then
-    wget --directory-prefix=data/wav/ http://speech.tools/kaldi_tuda_de/german-speechdata-package-v2.tar.gz
-    cd data/wav/
-    tar xvfz german-speechdata-package-v2.tar.gz
-    cd ../../
-fi
-
 #adapt this to the Sprachdatenaufnahmen2014 folder on your disk
-RAWDATA=data/wav/german-speechdata-package-v2
+RAWDATA=data/wav/
 
 # Filter by name
 FILTERBYNAME="*.xml"
