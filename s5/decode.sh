@@ -39,7 +39,20 @@
 # able to decode anything!
 # 
 
-decodedir=tibAvTestSet
+if [ $# -lt 1 ]
+then 
+  echo "Exiting: Expected format: ./decode.sh test_dir"
+  exit
+fi 
+
+cp -r $1 ./data/
+#remove last char if it is a slash
+dirname=$1
+if [ ${dirname: -1} = '/' ]
+then 
+  dirname=${dirname::-1}
+fi
+decodedir=${dirname##*/}
 mfccdir=mfcc
 
 # Check that steps and utils are probably linked:
@@ -61,8 +74,10 @@ if [ -f path.sh ]; then
 fi
 
 # This has to be set to a number equal or smaller than the total number of wav files in $decodedir ! 
-mfccJobs=4
-nDecodeJobs=2
+
+mfccJobs=$( find $1*.wav | wc -l )
+nDecodeJobs=$( expr $mfccJobs / 2 )
+
 
 echo "Runtime configuration is: nJobs $nJobs, nDecodeJobs $nDecodeJobs, mfccJobs $mfccJobs. If this is not what you want, edit decode.sh!"
 echo "Warning, it has to be set to a number equal or smaller than the total number of wav files in data/$decodedir! If this is not what you want, edit decode.sh!"

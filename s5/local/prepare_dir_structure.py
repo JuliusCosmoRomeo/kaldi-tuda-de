@@ -49,7 +49,7 @@ if not os.path.exists('exp/') and not os.path.exists('mfcc/'):
     lm_dir_src = data_dir + '/lm/'
     lm_dir_3gram_src = data_dir + '/lm/3gram-mincount/'
     lang_dir_src = data_dir + '/lang/'
-    wav_dir_src = data_dir + '/wav/'
+    #wav_dir_src = data_dir + '/wav/'
 
     print 'Mfcc source dir: ',mfcc_dir_src,' model (exp) dir: ', exp_dir_src
 
@@ -63,11 +63,11 @@ if not os.path.exists('exp/') and not os.path.exists('mfcc/'):
     make_sure_path_exists(lm_dir_3gram_src)
     print lang_dir_src
     make_sure_path_exists(lang_dir_src)
-    print wav_dir_src 
-    make_sure_path_exists(wav_dir_src)
+    #print wav_dir_src 
+    #make_sure_path_exists(wav_dir_src)
 
     symlink_file(mfcc_dir_src,'./mfcc')
     symlink_file(exp_dir_src,'./exp')
     symlink_file(lm_dir_src,'./data/local/lm')
     symlink_file(lang_dir_src,'./data/local/lang')
-    symlink_file(wav_dir_src,'./data/wav')
+    #symlink_file(wav_dir_src,'./data/wav')
