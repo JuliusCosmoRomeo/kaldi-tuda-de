@@ -23,6 +23,7 @@ import maryclient
 import StringIO
 import os
 import errno
+import logging
 
 from bs4 import BeautifulSoup
 
@@ -221,6 +222,7 @@ def getUtterances(ids, postfix_speaker ,cache_cleaned_sentences = True):
         except Exception as err:
             print 'Error in file, omitting', myid
             print err
+            logging.exception("")
 
     #Sort utterances by date
     utts = sorted(utts,key=lambda utt:utt['date'])
