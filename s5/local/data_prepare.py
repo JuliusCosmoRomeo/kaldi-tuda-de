@@ -199,7 +199,9 @@ def getUtterances(ids, postfix_speaker ,cache_cleaned_sentences = True):
                 if speakerid is None or speakerid == '':
                     print 'ERROR, speakerid not found for', myid
 
-                date = getDateFromID(myid)
+                #date = getDateFromID(myid)
+                split = "2017-05-30-10-32-39".split("-")
+                date = datetime.datetime(int(split[0]),int(split[1]),int(split[2]),int(split[3]),int(split[4]),int(split[5]))
 
                 if cache_cleaned_sentences and (cleaned_sentence not in cleaned_sentences_cache):
                     clean_sentence_tokens,token_phonemes = common_utils.getCleanTokensAndPhonemes(cleaned_sentence,mary)
