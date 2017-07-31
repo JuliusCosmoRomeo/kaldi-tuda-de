@@ -33,8 +33,14 @@ FILTERBYNAME="*.xml"
 find $RAWDATA/dev/$FILTERBYNAME -type f > data/waveIDs.txt
 find $RAWDATA/test/$FILTERBYNAME -type f >> data/waveIDs.txt
 find $RAWDATA/train/$FILTERBYNAME -type f >> data/waveIDs.txt
-python local/data_prepare.py -f data/waveIDs.txt
 
+if [ $# = 0 ]
+then
+  python local/data_prepare.py -f data/waveIDs.txt
+elif [ $# = 1 ]
+then 
+  python local/data_prepare.py --utterance-postfix $1 -f data/waveIDs.txt
+fi
 # Get freely available phoneme dictionaries, if they are not already downloaded
 if [ ! -f data/lexicon/de.txt ]
 then
