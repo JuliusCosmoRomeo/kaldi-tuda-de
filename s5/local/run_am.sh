@@ -160,5 +160,6 @@ for x in exp/*/decode*; do [ -d $x ] && grep WER $x/wer_* | utils/best_wer.sh; \
 done | sort -n -r -k2 > RESULTS.$USER.$time # to make sure you keep the results timed and owned
 
 echo training succedded
+echo "WER-RESULTS"
 cat RESULTS.$USER.$time
 exit 0
