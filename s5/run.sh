@@ -2,9 +2,9 @@
 
 #adapted from gale_arabic run.sh
 
-[ ! -L "steps" ] && ln -s ../../wsj/s5/steps
+[ ! -L "steps" ] && ln -s /opt/kaldi/egs/wsj/s5/steps
 
-[ ! -L "utils" ] && ln -s ../../wsj/s5/utils
+[ ! -L "utils" ] && ln -s /opt/kaldi/egs/wsj/s5/utils
 
 # mfccdir should be some place with a largish disk where you
 # want to store MFCC features.
