@@ -19,7 +19,7 @@ utf8()
 # Prepares KALDI dir structure and asks you where to store mfcc vectors and the final models (both can take up significant space)
 dirname=$( pwd )
 dirname=${dirname%%/s5*}
-dirname=${dirname##*egs/}
+dirname=${dirname##*models/}
 echo $dirname
 
 python local/prepare_dir_structure.py $dirname
