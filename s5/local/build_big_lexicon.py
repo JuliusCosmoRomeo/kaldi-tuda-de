@@ -109,7 +109,7 @@ def BASpron_to_list(pron,word=''):
             #try ignore list
             consumed,symbol,pron = consume(BAS_German_set['ignore'], pron)
             if not consumed:
-                print 'Warning, omitting unkown symbol',pron[0],' in pronounciation list:',orig_pron,'word:',word
+                print 'Warning, omitting unkown symbol',pron[0].encode("utf-8"),' in pronounciation list:',orig_pron.encode("utf-8"),'word:',word.encode("utf-8")
                 pron = pron[1:]
     return pron_list
 
@@ -128,7 +128,7 @@ def importSampa(myid,word_substitution_dict={},withFreq=True,manual=False,delimi
             if line.startswith('#') or len(line) == 0:
                 continue
             if line[0].isdigit():
-                print 'Info: Ignoring this line that starts with a number:',line
+                print 'Info: Ignoring this line that starts with a number:',line.encode("utf-8")
                 continue
 
             #remove carriage return, if it slipped into the line
