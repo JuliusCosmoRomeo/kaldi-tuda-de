@@ -32,7 +32,10 @@ def generateEntry(word,entry,sphinx_format=False):
             txt += word + ('('+str(i)+')' if i>0 else '') + '  ' + ' '.join(elem['pron']) + '\n'
         else:
             #Kaldi probabilty format <word> <freq> <pronounciation>
-            txt += word + ' ' + str(freq) + ' ' + ' '.join(elem['pron']) + '\n'
+	    #if word has no pronounciations do not add it to lexicon.txt
+	    if len(elem['pron']) > 0:
+	        txt += word + ' ' + str(freq) + ' ' + ' '.join(elem['pron']) + '\n'
+	    
     return txt
 
 if __name__ == '__main__':
