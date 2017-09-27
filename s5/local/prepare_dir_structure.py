@@ -40,7 +40,7 @@ make_sure_path_exists('data/local/dict/')
 
 #if exp and mfcc don't exist locally, create them as link to some other directory on a larger disk
 if not os.path.exists('exp/') and not os.path.exists('mfcc/'):
-    default_dir = '/data/models/' + sys.argv[1] + '/'
+    default_dir = '/models/' + sys.argv[1] + '/'
     data_dir = default_dir
 
 
