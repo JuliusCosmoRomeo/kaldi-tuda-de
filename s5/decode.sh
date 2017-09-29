@@ -45,7 +45,7 @@ then
   exit
 fi 
 
-cp -r $1 ./data/
+#cp -r $1 ./data/
 #remove last char if it is a slash
 dirname=$1
 if [ ${dirname: -1} = '/' ]
