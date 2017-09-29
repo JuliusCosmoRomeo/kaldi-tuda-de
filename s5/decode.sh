@@ -52,7 +52,7 @@ dirname=$1
 #then 
 #  dirname=${dirname::-1}
 #fi
-decodedir=dirname
+decodedir=$dirname
 mfccdir=mfcc
 
 # Check that steps and utils are probably linked:
