@@ -80,13 +80,13 @@ nDecodeJobs=$( expr $mfccJobs / 2 + 1 )
 
 
 echo "Runtime configuration is: nJobs $nJobs, nDecodeJobs $nDecodeJobs, mfccJobs $mfccJobs. If this is not what you want, edit decode.sh!"
-echo "Warning, it has to be set to a number equal or smaller than the total number of wav files in data/$decodedir! If this is not what you want, edit decode.sh!"
+echo "Warning, it has to be set to a number equal or smaller than the total number of wav files in $decodedir! If this is not what you want, edit decode.sh!"
 
 # Now make MFCC features.
     
 utils/fix_data_dir.sh $decodedir # some files fail to get mfcc for many reasons
 steps/make_mfcc.sh --cmd "$train_cmd" --nj $mfccJobs $decodedir $decodedir/exp/make_mfcc $mfccdir
-utils/fix_data_dir.sh data/$decodedir # some files fail to get mfcc for many reasons
+utils/fix_data_dir.sh $decodedir # some files fail to get mfcc for many reasons
 steps/compute_cmvn_stats.sh $decodedir $decodedir/exp/make_mfcc $mfccdir
 utils/fix_data_dir.sh $decodedir
 
