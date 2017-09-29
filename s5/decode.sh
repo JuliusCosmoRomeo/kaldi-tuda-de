@@ -48,11 +48,11 @@ fi
 #cp -r $1 ./data/
 #remove last char if it is a slash
 dirname=$1
-if [ ${dirname: -1} = '/' ]
-then 
-  dirname=${dirname::-1}
-fi
-decodedir=${dirname##*/}
+#if [ ${dirname: -1} = '/' ]
+#then 
+#  dirname=${dirname::-1}
+#fi
+decodedir=dirname
 mfccdir=mfcc
 
 # Check that steps and utils are probably linked:
@@ -76,7 +76,7 @@ fi
 # This has to be set to a number equal or smaller than the total number of wav files in $decodedir ! 
 
 mfccJobs=$( find $1*.wav | wc -l )
-nDecodeJobs=$( expr $mfccJobs / 2 )
+nDecodeJobs=$( expr $mfccJobs / 2 + 1 )
 
 
 echo "Runtime configuration is: nJobs $nJobs, nDecodeJobs $nDecodeJobs, mfccJobs $mfccJobs. If this is not what you want, edit decode.sh!"
@@ -84,22 +84,22 @@ echo "Warning, it has to be set to a number equal or smaller than the total numb
 
 # Now make MFCC features.
     
+utils/fix_data_dir.sh $decodedir # some files fail to get mfcc for many reasons
+steps/make_mfcc.sh --cmd "$train_cmd" --nj $mfccJobs $decodedir $decodedir/exp/make_mfcc $mfccdir
 utils/fix_data_dir.sh data/$decodedir # some files fail to get mfcc for many reasons
-steps/make_mfcc.sh --cmd "$train_cmd" --nj $mfccJobs data/$decodedir exp/make_mfcc/$decodedir $mfccdir
-utils/fix_data_dir.sh data/$decodedir # some files fail to get mfcc for many reasons
-steps/compute_cmvn_stats.sh data/$decodedir exp/make_mfcc/$decodedir $mfccdir
-utils/fix_data_dir.sh data/$decodedir
+steps/compute_cmvn_stats.sh $decodedir $decodedir/exp/make_mfcc $mfccdir
+utils/fix_data_dir.sh $decodedir
 
 # Decode with tri3b model
 steps/decode_fmllr.sh --nj $nDecodeJobs --cmd "$decode_cmd" \
-      exp/tri3b/graph data/$decodedir exp/tri3b/decode_$decodedir || exit 1;
+      exp/tri3b/graph $decodedir $decodedir/exp/tri3b || exit 1;
 
 # Now decode with SGMM decoder
 steps/decode_sgmm2.sh --nj $nDecodeJobs --cmd "$decode_cmd" --config conf/decode.config \
-  --transform-dir exp/tri3b/decode_$decodedir exp/sgmm_5a/graph data/$decodedir exp/sgmm_5a/decode_$decodedir
+  --transform-dir $decodedir/exp/tri3b exp/sgmm_5a/graph $decodedir $decodedir/exp/sgmm_5a
 
 # (Optional) rescore with large LM
-steps/lmrescore_const_arpa.sh data/lang_test data/lang_const_arpa data/$decodedir exp/sgmm_5a/decode_$decodedir exp/sgmm_5a/decode_${decodedir}_rescored
+steps/lmrescore_const_arpa.sh data/lang_test data/lang_const_arpa $decodedir $decodedir/exp/sgmm_5a $decodedir/exp/sgmm_5a/rescored
 
 # Output human readable version of the best path ( = best automatic transcript)
-cat exp/sgmm_5a/decode_${decodedir}_rescored/scoring/log/best_path.13.log
+cat $decodedir/exp/sgmm_5a/rescored/scoring/log/best_path.13.log
