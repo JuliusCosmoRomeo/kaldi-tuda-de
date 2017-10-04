@@ -85,21 +85,21 @@ echo "Warning, it has to be set to a number equal or smaller than the total numb
 # Now make MFCC features.
     
 utils/fix_data_dir.sh $decodedir # some files fail to get mfcc for many reasons
-steps/make_mfcc.sh --cmd "$train_cmd" --nj $mfccJobs $decodedir $decodedir/exp/make_mfcc $mfccdir
+steps/make_mfcc.sh --cmd "$train_cmd" --nj $mfccJobs $decodedir $decodedir/exp/make_mfcc/$decodedir $mfccdir
 utils/fix_data_dir.sh $decodedir # some files fail to get mfcc for many reasons
-steps/compute_cmvn_stats.sh $decodedir $decodedir/exp/make_mfcc $mfccdir
+steps/compute_cmvn_stats.sh $decodedir $decodedir/exp/make_mfcc/$decodedir $mfccdir
 utils/fix_data_dir.sh $decodedir
 
 # Decode with tri3b model
 steps/decode_fmllr.sh --nj $nDecodeJobs --cmd "$decode_cmd" \
-      exp/tri3b/graph $decodedir $decodedir/exp/tri3b || exit 1;
+      exp/tri3b/graph $decodedir $decodedir/exp/tri3b/decode_$decodedir || exit 1;
 
 # Now decode with SGMM decoder
 steps/decode_sgmm2.sh --nj $nDecodeJobs --cmd "$decode_cmd" --config conf/decode.config \
-  --transform-dir $decodedir/exp/tri3b exp/sgmm_5a/graph $decodedir $decodedir/exp/sgmm_5a
+  --transform-dir $decodedir/exp/tri3b/decode_$decodedir exp/sgmm_5a/graph $decodedir $decodedir/exp/sgmm_5a/decode_$decodedir
 
 # (Optional) rescore with large LM
-steps/lmrescore_const_arpa.sh data/lang_test data/lang_const_arpa $decodedir $decodedir/exp/sgmm_5a $decodedir/exp/sgmm_5a/rescored
+steps/lmrescore_const_arpa.sh data/lang_test data/lang_const_arpa $decodedir $decodedir/exp/sgmm_5a/decode_$decodedir $decodedir/exp/sgmm_5a/decode_${decodedir}/rescored
 
 # Output human readable version of the best path ( = best automatic transcript)
-cat $decodedir/exp/sgmm_5a/rescored/scoring/log/best_path.13.log
+cat $decodedir/exp/sgmm_5a/decode_${decodedir}/rescored/scoring/log/best_path.13.log
