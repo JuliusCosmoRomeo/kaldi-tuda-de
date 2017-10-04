@@ -96,10 +96,10 @@ steps/decode_fmllr.sh --nj $nDecodeJobs --cmd "$decode_cmd" \
 
 # Now decode with SGMM decoder
 steps/decode_sgmm2.sh --nj $nDecodeJobs --cmd "$decode_cmd" --config conf/decode.config \
-  --transform-dir $decodedir/exp/tri3b/decode_${decodedir} exp/sgmm_5a/graph $decodedir $decodedir/exp/sgmm_5a/decode_${decodedir}
+  --transform-dir $decodedir/exp/tri3b/decode_${decodedir} exp/sgmm_5a/graph $decodedir $decodedir/exp/sgmm_5a/${decodedir}
 
 # (Optional) rescore with large LM
-steps/lmrescore_const_arpa.sh data/lang_test data/lang_const_arpa $decodedir $decodedir/exp/sgmm_5a/decode_$decodedir $decodedir/exp/sgmm_5a/decode_${decodedir}/rescored
+steps/lmrescore_const_arpa.sh data/lang_test data/lang_const_arpa $decodedir $decodedir/exp/sgmm_5a/$decodedir $decodedir/exp/sgmm_5a/${decodedir}/rescored
 
 # Output human readable version of the best path ( = best automatic transcript)
-cat $decodedir/exp/sgmm_5a/decode_${decodedir}/rescored/scoring/log/best_path.13.log
+cat $decodedir/exp/sgmm_5a/${decodedir}/rescored/scoring/log/best_path.13.log
