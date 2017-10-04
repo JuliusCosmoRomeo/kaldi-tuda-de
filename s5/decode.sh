@@ -92,7 +92,7 @@ utils/fix_data_dir.sh $decodedir
 
 # Decode with tri3b model
 steps/decode_fmllr.sh --nj $nDecodeJobs --cmd "$decode_cmd" \
-      exp/tri3b/graph $decodedir $decodedir/exp/tri3b/decode_${decodedir} || exit 1;
+      exp/tri3b/graph $decodedir $decodedir/exp/tri3b/${decodedir} || exit 1;
 
 # Now decode with SGMM decoder
 steps/decode_sgmm2.sh --nj $nDecodeJobs --cmd "$decode_cmd" --config conf/decode.config \
