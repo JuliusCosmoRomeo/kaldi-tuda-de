@@ -92,11 +92,11 @@ utils/fix_data_dir.sh $decodedir
 
 # Decode with tri3b model
 steps/decode_fmllr.sh --nj $nDecodeJobs --cmd "$decode_cmd" \
-      exp/tri3b/graph $decodedir $decodedir/exp/tri3b/decode_$decodedir || exit 1;
+      exp/tri3b/graph $decodedir $decodedir/exp/tri3b/decode_${decodedir} || exit 1;
 
 # Now decode with SGMM decoder
 steps/decode_sgmm2.sh --nj $nDecodeJobs --cmd "$decode_cmd" --config conf/decode.config \
-  --transform-dir $decodedir/exp/tri3b/decode_$decodedir exp/sgmm_5a/graph $decodedir $decodedir/exp/sgmm_5a/decode_$decodedir
+  --transform-dir $decodedir/exp/tri3b/decode_${decodedir} exp/sgmm_5a/graph $decodedir $decodedir/exp/sgmm_5a/decode_${decodedir}
 
 # (Optional) rescore with large LM
 steps/lmrescore_const_arpa.sh data/lang_test data/lang_const_arpa $decodedir $decodedir/exp/sgmm_5a/decode_$decodedir $decodedir/exp/sgmm_5a/decode_${decodedir}/rescored
