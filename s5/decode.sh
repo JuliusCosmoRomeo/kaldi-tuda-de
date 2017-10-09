@@ -105,3 +105,5 @@ steps/lmrescore_const_arpa.sh data/lang_test data/lang_const_arpa $decodedir $de
 
 # Output human readable version of the best path ( = best automatic transcript)
 cat $decodedir/exp/sgmm_5a/${decodedir}/rescored/scoring/log/best_path.13.log
+
+
